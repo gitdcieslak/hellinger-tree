@@ -1,104 +1,115 @@
 # Tasks
 
-## 1. Package skeleton
+## Phase 1 — Core estimator
 
-- [ ] Create `src/hellinger_tree/`
-- [ ] Add `src/hellinger_tree/__init__.py`
-- [ ] Add `src/hellinger_tree/estimator.py`
-- [ ] Add `src/hellinger_tree/tree.py` if separating node logic
-- [ ] Add `src/hellinger_tree/criteria.py` if separating Hellinger scoring
-- [ ] Configure `pyproject.toml`
-- [ ] Add test dependencies
+### 1. Package skeleton
 
-## 2. Implement core estimator
+- [x] Create `src/hellinger_tree/`
+- [x] Add `src/hellinger_tree/__init__.py`
+- [x] Add `src/hellinger_tree/estimator.py`
+- [x] Configure `pyproject.toml`
+- [x] Add test dependencies
 
-- [ ] Add `HellingerDecisionTreeClassifier`
-- [ ] Inherit from `BaseEstimator` and `ClassifierMixin`
-- [ ] Add constructor parameters:
-  - [ ] `max_depth`
-  - [ ] `min_samples_split`
-  - [ ] `min_samples_leaf`
-  - [ ] `max_features`
-  - [ ] `random_state`
-  - [ ] `laplace`
-  - [ ] `positive_class`
-- [ ] Add `fit`
-- [ ] Add `predict`
-- [ ] Add `predict_proba`
+### 2. Implement core estimator
 
-## 3. Implement tree induction
+- [x] Add `HellingerDecisionTreeClassifier`
+- [x] Inherit from `BaseEstimator` and `ClassifierMixin`
+- [x] Add constructor parameters
+- [x] Add `fit`
+- [x] Add `predict`
+- [x] Add `predict_proba`
 
-- [ ] Add internal `_Node` representation
-- [ ] Implement recursive node growth
-- [ ] Implement pure-node stopping
-- [ ] Implement `max_depth` stopping
-- [ ] Implement `min_samples_split` stopping
-- [ ] Implement `min_samples_leaf` validation
-- [ ] Implement no-valid-split fallback to leaf
+### 3. Implement tree induction
 
-## 4. Implement Hellinger split selection
+- [x] Add internal node representation
+- [x] Implement recursive node growth
+- [x] Implement stopping rules
+- [x] Implement no-valid-split fallback
 
-- [ ] Implement numeric threshold generation
-- [ ] Implement binary Hellinger score
-- [ ] Skip invalid splits
-- [ ] Select maximum-score split
-- [ ] Implement deterministic tie-breaking:
-  - [ ] higher score wins
-  - [ ] lower feature index wins
-  - [ ] lower threshold wins
+### 4. Implement Hellinger split selection
 
-## 5. Implement leaf probabilities
+- [x] Implement numeric threshold generation
+- [x] Implement binary Hellinger score
+- [x] Skip invalid splits
+- [x] Implement deterministic tie-breaking
 
-- [ ] Implement Laplace-smoothed probabilities
-- [ ] Implement empirical probabilities when `laplace=False`
-- [ ] Ensure probability columns follow `classes_`
-- [ ] Ensure probability rows sum to 1
+### 5. Implement leaf probabilities
 
-## 6. Implement sklearn compatibility
+- [x] Implement Laplace-smoothed probabilities
+- [x] Implement empirical probabilities when `laplace=False`
+- [x] Ensure probability rows sum to 1
 
-- [ ] Add input validation with `check_X_y`
-- [ ] Add prediction validation with `check_array`
-- [ ] Add fittedness checks
-- [ ] Set `classes_`
-- [ ] Set `n_features_in_`
-- [ ] Ensure `fit` returns `self`
-- [ ] Ensure deterministic behavior with `random_state`
+### 6. Implement sklearn compatibility
 
-## 7. Implement max_features behavior
+- [x] Add sklearn validation
+- [x] Add fittedness checks
+- [x] Set `classes_`
+- [x] Set `n_features_in_`
+- [x] Ensure deterministic behavior
 
-- [ ] Support `max_features=None`
-- [ ] Support integer `max_features`
-- [ ] Support float `max_features`
-- [ ] Ensure at least one feature is considered
-- [ ] Use `random_state` for feature subsampling
+### 7. Unit tests
 
-## 8. Unit tests
+- [x] Test basic fit/predict
+- [x] Test `predict_proba`
+- [x] Test Laplace smoothing
+- [x] Test binary-only validation
+- [x] Test BaggingClassifier compatibility
 
-- [ ] Test basic `fit`
-- [ ] Test `predict` shape
-- [ ] Test `predict_proba` shape
-- [ ] Test probability row sums
-- [ ] Test Laplace smoothing for counts `[0, 3]`
-- [ ] Test empirical probabilities when `laplace=False`
-- [ ] Test pure-node stopping
-- [ ] Test `min_samples_leaf`
-- [ ] Test deterministic tie-breaking
-- [ ] Test binary-only validation
-- [ ] Test BaggingClassifier compatibility
+---
 
-## 9. Documentation
+# Phase 2 — Validation and introspection
 
-- [ ] Add README usage example
-- [ ] Document binary/numeric-only limitations
-- [ ] Document Laplace smoothing behavior
-- [ ] Document BaggingClassifier usage
-- [ ] Add short note explaining that Laplace smoothing affects probabilities only
+## 8. Tree introspection utilities
 
-## 10. Acceptance
+- [x] Add `get_depth()`
+- [x] Add `get_n_leaves()`
+- [x] Add `export_tree()`
+- [ ] Add optional `print_tree()`
 
-- [ ] `pytest` passes
-- [ ] Package imports successfully
-- [ ] Estimator fits numeric binary data
-- [ ] `predict` works
-- [ ] `predict_proba` works
-- [ ] Bagged HDDT works with `BaggingClassifier`
+## 9. Split auditing support
+
+- [x] Store node-level Hellinger scores
+- [x] Store split class distributions
+- [ ] Add optional debug/export mode
+
+## 10. Synthetic skew validation
+
+- [x] Add Gaussian synthetic dataset generator
+- [x] Add controllable skew ratios
+- [x] Add overlap/noise controls
+- [x] Add synthetic smoke benchmarks
+
+## 11. CART comparison smoke tests
+
+- [x] Compare against sklearn CART
+- [x] Evaluate balanced vs skewed scenarios
+- [x] Measure AUROC and PR-AUC
+
+## 12. Reproducibility hardening
+
+- [ ] Pin sklearn version
+- [ ] Pin numpy version
+- [x] Add deterministic seed tests
+- [x] Verify identical exported trees under fixed seeds
+
+---
+
+# Phase 3 — Research readiness
+
+## 13. Original-paper validation
+
+- [ ] Reproduce at least one synthetic result from the original HDDT paper
+- [ ] Reproduce one bagged HDDT comparison against CART
+
+## 14. Packaging cleanup
+
+- [ ] Add versioning
+- [ ] Add license
+- [ ] Add CI workflow
+- [ ] Add wheel build support
+
+## 15. Benchmark handoff readiness
+
+- [ ] Finalize estimator API stability
+- [ ] Publish install instructions
+- [ ] Prepare benchmark integration notes

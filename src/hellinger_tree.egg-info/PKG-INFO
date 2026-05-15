@@ -1,0 +1,91 @@
+Metadata-Version: 2.4
+Name: hellinger-tree
+Version: 0.1.0
+Summary: Small scikit-learn-compatible Hellinger decision tree classifier.
+Author: hellinger-tree contributors
+License: MIT License
+        
+        Copyright (c) 2026 gitdcieslak
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.22
+Requires-Dist: scikit-learn>=1.2
+Provides-Extra: dev
+Requires-Dist: pytest>=7; extra == "dev"
+Dynamic: license-file
+
+# hellinger-tree
+
+`hellinger-tree` is a small, auditable, scikit-learn-compatible implementation of a Hellinger decision tree classifier for binary imbalanced classification research.
+
+## Scope
+
+Included in this initial implementation:
+
+- Binary classification only.
+- Numeric feature thresholds only.
+- Recursive binary tree induction without pruning.
+- Hellinger-distance split scoring.
+- Deterministic tie-breaking by lower feature index, then lower threshold.
+- Laplace-smoothed leaf probabilities by default.
+- Compatibility with `sklearn.ensemble.BaggingClassifier`.
+
+Not included yet:
+
+- Native categorical splitting.
+- Missing-value routing.
+- Pruning.
+- Benchmarking code.
+
+## Installation
+
+```bash
+pip install -e ".[dev]"
+```
+
+## Usage
+
+```python
+import numpy as np
+from hellinger_tree import HellingerDecisionTreeClassifier
+
+X = np.array([[0.0], [1.0], [2.0], [3.0]])
+y = np.array([0, 0, 1, 1])
+
+clf = HellingerDecisionTreeClassifier(random_state=0)
+clf.fit(X, y)
+
+print(clf.predict([[1.5]]))
+print(clf.predict_proba([[1.5]]))
+```
+
+## Development
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
+
+## Notes
+
+Laplace smoothing affects only `predict_proba`; split selection uses raw class counts in the Hellinger score.
