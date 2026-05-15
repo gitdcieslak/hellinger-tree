@@ -103,13 +103,13 @@
 
 ## 14. Packaging cleanup
 
-- [ ] Add versioning
-- [ ] Add license
-- [ ] Add CI workflow
-- [ ] Add wheel build support
+- [x] Add versioning
+- [x] Add license
+- [x] Add CI workflow
+- [x] Add wheel build support
 
 ## 15. Benchmark handoff readiness
 
-- [ ] Finalize estimator API stability
-- [ ] Publish install instructions
-- [ ] Prepare benchmark integration notes
+- [x] Finalize estimator API stability
+- [x] Publish install instructions
+- [x] Prepare benchmark integration notes

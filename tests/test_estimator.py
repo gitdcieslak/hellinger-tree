@@ -4,7 +4,11 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import BaggingClassifier
 
-from hellinger_tree import HellingerDecisionTreeClassifier, make_gaussian_skew_dataset
+from hellinger_tree import HellingerDecisionTreeClassifier, __version__, make_gaussian_skew_dataset
+
+
+def test_version_is_exposed():
+    assert __version__ == "0.1.0"
 
 
 def test_basic_fit_predict():
